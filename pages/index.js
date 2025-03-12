@@ -27,7 +27,7 @@ export async function getStaticProps() {
       products: data.products,
     },
     //  just in production
-    revalidate: 3,
+    revalidate: 10,
   };
 }
 
