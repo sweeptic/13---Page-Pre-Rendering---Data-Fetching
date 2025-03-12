@@ -15,12 +15,24 @@ function HomePage(props) {
 }
 
 // Runs in build time with 'next build' script
-export async function getStaticProps() {
+export async function getStaticProps(context) {
   console.log('Re generating...');
+  console.log('context', context);
 
   const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
   const jsonData = await fs.readFile(filePath);
+  //const data = undefined;
   const data = JSON.parse(jsonData);
+
+  if (!data) {
+    return {
+      redirect: { destination: '/no-data' },
+    };
+  }
+
+  if (data.products.length === 0) {
+    return { notfound: true };
+  }
 
   return {
     props: {
@@ -28,6 +40,7 @@ export async function getStaticProps() {
     },
     //  just in production
     revalidate: 10,
+    notFound: true,
   };
 }
 
