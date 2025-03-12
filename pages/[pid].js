@@ -1,5 +1,9 @@
+import fs from 'fs/promises';
+import path from 'path';
+
 export default function ProductDetail(props) {
   const { loadedProduct } = props;
+
   return (
     <>
       <h1>{loadedProduct.title}</h1>
@@ -10,7 +14,6 @@ export default function ProductDetail(props) {
 
 export async function getStaticProps(context) {
   const { params } = context;
-  console.log('context', context);
 
   const productId = params.pid;
 
@@ -19,7 +22,7 @@ export async function getStaticProps(context) {
   //const data = undefined;
   const data = JSON.parse(jsonData);
 
-  const product = data.find((item) => item.id === productId);
+  const product = data.products.find((item) => item.id === productId);
 
   return {
     props: {
@@ -28,4 +31,10 @@ export async function getStaticProps(context) {
   };
 }
 
-// export async function getStaticPaths(context) {}
+// 3x hivja a getstaticpropsot mert itt 3 path van
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { pid: 'p1' } }, { params: { pid: 'p2' } }, { params: { pid: 'p3' } }],
+    fallback: false,
+  };
+}
