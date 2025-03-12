@@ -1,4 +1,5 @@
 import fs from 'fs/promises';
+import Link from 'next/link';
 import path from 'path';
 
 // This page is pre rendered by default
@@ -8,7 +9,9 @@ function HomePage(props) {
   return (
     <ul>
       {products.map((product) => (
-        <li key={product.id}>{product.title}</li>
+        <li key={product.id}>
+          <Link href={`/${product.id}`}>{product.title}</Link>
+        </li>
       ))}
     </ul>
   );
@@ -40,7 +43,7 @@ export async function getStaticProps(context) {
     },
     //  just in production
     revalidate: 10,
-    notFound: true,
+    // notFound: true,
   };
 }
 
