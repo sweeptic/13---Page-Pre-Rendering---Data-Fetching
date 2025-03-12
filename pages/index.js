@@ -1,9 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+// This page is pre rendered by default
 function HomePage(props) {
-  console.log('props', props);
-
   const { products } = props;
 
   return (
@@ -15,9 +14,7 @@ function HomePage(props) {
   );
 }
 
-// This page is pre rendered by default
-
-// runs in build time
+// Runs in build time
 export async function getStaticProps() {
   const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
   const jsonData = await fs.readFile(filePath);
