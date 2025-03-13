@@ -10,6 +10,12 @@ export default function ProductDetail(props) {
 
   return (
     <>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, sequi vero fugit placeat architecto velit omnis
+        hic fugiat vitae? Sed aliquid consequatur est suscipit sequi culpa veniam quos totam illum alias! Ducimus ab,
+        natus a ipsam veniam nisi voluptatum aliquam voluptates accusamus, iste alias velit eveniet similique ut animi
+        repellendus? Quidem quis laborum consequatur itaque magni maiores molestias, vitae facilis.
+      </p>
       <h1>{loadedProduct.title}</h1>
       <p>{loadedProduct.description}</p>
     </>
@@ -26,6 +32,8 @@ async function getData() {
 }
 
 export async function getStaticProps(context) {
+  console.log('getStaticProps RUNS');
+
   const { params } = context;
 
   const productId = params.pid;
