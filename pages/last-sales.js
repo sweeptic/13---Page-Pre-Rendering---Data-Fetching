@@ -5,33 +5,10 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function LastSalesPage(props) {
   const [phones, setPhones] = useState(props.data);
-  //   const [isLoading, setIsLoading] = useState(false);
-
   const { data, error } = useSWR('https://api.restful-api.dev/objects', fetcher);
-
-  //   const { data, error, isLoading } = useSWR('/api/user', fetcher);
-
-  //   useEffect(() => {
-  //     console.log('data', data);
-  //   }, [data]);
-
-  //   setPhones(data);
-
-  //   useEffect(() => {
-  //     async function fetchApi() {
-  //       setIsLoading(true);
-  //       const res = await fetch('https://api.restful-api.dev/objects');
-  //       const data = await res.json();
-  //       setPhones(data);
-  //       setIsLoading(false);
-  //     }
-
-  //     fetchApi();
-  //   }, []);
 
   useEffect(() => {
     setPhones(data);
-    console.log('SWR runs');
   }, [data]);
 
   if (error) {
@@ -61,7 +38,6 @@ export async function getStaticProps() {
     return await res.json();
   }
   const data = await fetchApi();
-  console.log('getStaticProps runs');
 
   return {
     props: { data },
