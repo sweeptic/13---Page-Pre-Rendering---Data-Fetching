@@ -1,31 +1,43 @@
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function LastSalesPage() {
-  const [phones, setPhones] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  //   const [phones, setPhones] = useState([]);
+  //   const [isLoading, setIsLoading] = useState(false);
+
+  const { data, error } = useSWR('https://api.restful-api.dev/objects', fetcher);
+  //   const { data, error, isLoading } = useSWR('/api/user', fetcher);
 
   useEffect(() => {
-    async function fetchApi() {
-      setIsLoading(true);
-      const res = await fetch('https://api.restful-api.dev/objects');
-      const data = await res.json();
-      setPhones(data);
-      setIsLoading(false);
-    }
+    console.log('data', data);
+  }, [data]);
 
-    fetchApi();
-  }, []);
+  //   setPhones(data);
 
-  useEffect(() => {
-    console.log('phones state have changed', phones);
-  }, [phones]);
+  //   useEffect(() => {
+  //     async function fetchApi() {
+  //       setIsLoading(true);
+  //       const res = await fetch('https://api.restful-api.dev/objects');
+  //       const data = await res.json();
+  //       setPhones(data);
+  //       setIsLoading(false);
+  //     }
 
-  if (isLoading) {
-    return <p>Loading...</p>;
+  //     fetchApi();
+  //   }, []);
+
+  //   useEffect(() => {
+  //     console.log('phones state have changed', phones);
+  //   }, [phones]);
+
+  if (error) {
+    return <p>Failed to load</p>;
   }
 
-  if (!phones.length) {
-    return <p>No data yet</p>;
+  if (!data) {
+    return <p>Loading...</p>;
   }
 
   return (
@@ -33,7 +45,7 @@ export default function LastSalesPage() {
       <h1>Last Sales Page</h1>
 
       <ul>
-        {phones.map((item) => (
+        {data?.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
