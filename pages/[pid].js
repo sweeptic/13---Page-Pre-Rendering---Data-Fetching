@@ -4,6 +4,10 @@ import path from 'path';
 export default function ProductDetail(props) {
   const { loadedProduct } = props;
 
+  //   if (!loadedProduct) {
+  //     return <p>Loading...</p>;
+  //   }
+
   return (
     <>
       <h1>{loadedProduct.title}</h1>
@@ -34,7 +38,14 @@ export async function getStaticProps(context) {
 // 3x hivja a getstaticpropsot mert itt 3 path van
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { pid: 'p1' } }, { params: { pid: 'p2' } }, { params: { pid: 'p3' } }],
-    fallback: false,
+    paths: [
+      //    pre generate
+      { params: { pid: 'p1' } },
+      //   { params: { pid: 'p2' } },
+      //   { params: { pid: 'p3' } }
+    ],
+    //  postpone generation pages
+    // fallback: true,
+    fallback: 'blocking',
   };
 }
