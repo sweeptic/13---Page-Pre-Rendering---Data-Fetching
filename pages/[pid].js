@@ -4,9 +4,9 @@ import path from 'path';
 export default function ProductDetail(props) {
   const { loadedProduct } = props;
 
-  //   if (!loadedProduct) {
-  //     return <p>Loading...</p>;
-  //   }
+  if (!loadedProduct) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -34,6 +34,10 @@ export async function getStaticProps(context) {
 
   const product = data.products.find((item) => item.id === productId);
 
+  if (!product) {
+    return { notFound: true };
+  }
+
   return {
     props: {
       loadedProduct: product,
@@ -48,17 +52,17 @@ export async function getStaticPaths() {
 
   const paths = ids.map((pid) => ({ params: { pid } }));
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: true };
 
-  return {
-    paths: [
-      //    pre generate
-      { params: { pid: 'p1' } },
-      //   { params: { pid: 'p2' } },
-      //   { params: { pid: 'p3' } }
-    ],
-    //  postpone generation pages
-    // fallback: true,
-    fallback: 'blocking',
-  };
+  //   return {
+  //     paths: [
+  //       //    pre generate
+  //       { params: { pid: 'p1' } },
+  //       { params: { pid: 'p2' } },
+  //       { params: { pid: 'p3' } },
+  //     ],
+  //     //  postpone generation pages
+  //     // fallback: true,
+  //     fallback: 'blocking',
+  //   };
 }
